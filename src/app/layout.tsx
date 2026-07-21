@@ -1,58 +1,39 @@
-import type { Metadata, Viewport } from "next";
-import { Manrope, Bebas_Neue, Gloock } from "next/font/google";
-import "@/styles/globals.css";
-import { RootProviders } from "@/components/providers/RootProviders";
-import { BackgroundLayers } from "@/components/shared/BackgroundLayers";
-import { APP_IDENTITY } from "@/constants/navigation";
+import type { Metadata } from "next";
+import { Bebas_Neue, Manrope, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas-neue",
+});
 
 const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-body",
-  display: "swap",
+  variable: "--font-manrope",
 });
 
-const bebas = Bebas_Neue({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const gloock = Gloock({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-gloock",
-  display: "swap",
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: APP_IDENTITY.name,
-    template: `%s — ${APP_IDENTITY.name}`,
-  },
-  description: "Industrial Operating Brain — Operations Console",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#070707",
-  width: "device-width",
-  initialScale: 1,
+  title: "Industrial Operating Brain",
+  description: "Cognitive Console for Industry 5.0",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="en"
-      className={`scroll-smooth ${manrope.variable} ${bebas.variable} ${gloock.variable}`}
-    >
-      <body>
-        <BackgroundLayers />
-        <RootProviders>{children}</RootProviders>
+    <html lang="en" className={`${bebasNeue.variable} ${manrope.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+      <body className="bg-background text-zinc-300 font-body min-h-screen overflow-x-hidden relative antialiased selection:bg-accent-bg selection:text-accent">
+        {/* Persistent global noise texture from landing page */}
+        <div className="fixed inset-0 z-50 pointer-events-none opacity-[0.02] mix-blend-screen noise-bg"></div>
+        {children}
       </body>
     </html>
   );

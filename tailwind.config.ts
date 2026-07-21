@@ -1,69 +1,51 @@
 import type { Config } from "tailwindcss";
-import { tokens } from "./src/tokens";
 
 const config: Config = {
   content: [
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./Frontend_Preparation/**/*.{html,js}", 
   ],
   theme: {
     extend: {
+      // Moving colors INSIDE extend restores all default Tailwind colors!
       colors: {
-        bg: tokens.colors.bg,
-        surface: tokens.colors.surface,
-        "surface-2": tokens.colors["surface-2"],
-        border: tokens.colors.border,
-        "border-strong": tokens.colors["border-strong"],
-        accent: tokens.colors.accent,
-        "accent-soft": tokens.colors["accent-soft"],
-        ink: tokens.colors.ink,
-        muted: tokens.colors.muted,
-        dim: tokens.colors.dim,
-        gold: tokens.colors.gold,
+        background: "#070707", 
+        surface: {
+          1: "#101012",
+          2: "#18181B",
+          3: "#27272A",
+        },
+        accent: {
+          DEFAULT: "#818CF8", 
+          hover: "#6366F1",
+          bg: "rgba(129, 140, 248, 0.1)",
+        },
+        border: {
+          subtle: "rgba(255, 255, 255, 0.06)",
+          DEFAULT: "rgba(255, 255, 255, 0.1)",
+          strong: "rgba(255, 255, 255, 0.2)",
+        },
+        status: {
+          success: "#10B981",
+          warning: "#F59E0B",
+          critical: "#EF4444",
+        },
       },
       fontFamily: {
-        sans: ["var(--font-body)", ...tokens.typography.bodyStack],
-        display: ["var(--font-display)", ...tokens.typography.displayStack],
+        display: ["var(--font-bebas-neue)", "sans-serif"],
+        body: ["var(--font-manrope)", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "monospace"],
       },
-      fontSize: {
-        xs: ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.1em" }],
-        sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1rem", { lineHeight: "1.5rem" }],
-        lg: ["1.125rem", { lineHeight: "1.75rem" }],
-        "display-sm": ["1.875rem", { lineHeight: "1.1", letterSpacing: "-0.03em" }],
-        "display-md": ["2.25rem", { lineHeight: "1.1", letterSpacing: "-0.03em" }],
-        "display-lg": ["3rem", { lineHeight: "1.1", letterSpacing: "-0.04em" }],
-        "display-xl": ["3.75rem", { lineHeight: "1.1", letterSpacing: "-0.04em" }],
-        "display-2xl": ["4.5rem", { lineHeight: "1.1", letterSpacing: "-0.04em" }],
-        metric: ["1.875rem", { lineHeight: "1", letterSpacing: "-0.02em" }],
-        "metric-lg": ["2.25rem", { lineHeight: "1", letterSpacing: "-0.02em" }],
-      } as const,
-      letterSpacing: tokens.typography.tracking as Record<string, string>,
-      borderRadius: tokens.radius,
-      boxShadow: tokens.shadows,
-      zIndex: tokens.zIndex,
-      transitionTimingFunction: {
-        "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "out-quart": "cubic-bezier(0.25, 1, 0.5, 1)",
-      },
-      keyframes: {
-        "pulse-dot": {
-          "0%, 100%": { opacity: "1", boxShadow: "0 0 1rem rgba(129,140,248,0.65)" },
-          "50%": { opacity: "0.6", boxShadow: "0 0 0.25rem rgba(129,140,248,0.35)" },
-        },
-        "sweep-down": {
-          "0%": { opacity: "0", transform: "translateY(-0.5rem)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        "pulse-dot": "pulse-dot 2s ease-in-out infinite",
-        "sweep-down": "sweep-down 0.3s ease-in-out",
-      },
+      boxShadow: {
+        none: 'none', 
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/container-queries'),
+  ],
 };
-
 export default config;
